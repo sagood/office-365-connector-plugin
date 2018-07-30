@@ -13,11 +13,6 @@
  */
 package jenkins.plugins.office365connector;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import hudson.model.Cause;
 import hudson.model.Run;
 import hudson.model.User;
@@ -26,6 +21,11 @@ import jenkins.plugins.office365connector.model.Fact;
 import jenkins.plugins.office365connector.utils.TimeUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Collects helper methods that create instance of {@link jenkins.plugins.office365connector.model.Fact Fact} class.
@@ -39,6 +39,7 @@ public class FactsBuilder {
     final static String NAME_CULPRITS = "Culprits";
     final static String NAME_DEVELOPERS = "Developers";
     final static String NAME_NUMBER_OF_CHANGED_FILES = "Number of files changed";
+    final static String NAME_CHANGE_DETAILS = "Change details";
 
     final static String NAME_START_TIME = "Start time";
     final static String NAME_COMPLETION_TIME = "Completion time";
@@ -142,6 +143,12 @@ public class FactsBuilder {
         addFact(NAME_PASSED_TESTS, action.getTotalCount() - action.getFailCount() - action.getSkipCount());
         addFact(NAME_FAILED_TESTS, action.getFailCount());
         addFact(NAME_SKIPPED_TESTS, action.getSkipCount());
+    }
+
+    public void addChangeDetails(String details) {
+        if (details != null && !details.isEmpty()) {
+            addFact(NAME_CHANGE_DETAILS, details);
+        }
     }
 
     public void addFact(String name, int value) {

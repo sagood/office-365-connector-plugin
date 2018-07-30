@@ -16,26 +16,12 @@
 package jenkins.plugins.office365connector;
 
 
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.RejectedExecutionException;
-
 import com.google.common.base.Predicates;
 import com.google.common.collect.Iterables;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import hudson.model.AbstractBuild;
-import hudson.model.Job;
-import hudson.model.Result;
-import hudson.model.Run;
-import hudson.model.TaskListener;
-import hudson.model.User;
+import hudson.model.*;
 import hudson.scm.ChangeLogSet;
 import jenkins.plugins.office365connector.model.Card;
 import jenkins.plugins.office365connector.model.Fact;
@@ -43,6 +29,11 @@ import jenkins.plugins.office365connector.model.Section;
 import jenkins.plugins.office365connector.utils.TimeUtils;
 import jenkins.plugins.office365connector.workflow.StepParameters;
 import org.apache.commons.lang.StringUtils;
+
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
+import java.util.concurrent.RejectedExecutionException;
 
 /**
  * @author srhebbar
@@ -291,18 +282,36 @@ public final class Office365ConnectorWebhookNotifier {
 
         if (!sets.isEmpty()) {
             Set<User> authors = new HashSet<>();
+            ArrayList<String> changes = new ArrayList<>();
             int filesCounter = 0;
             if (Iterables.all(sets, Predicates.instanceOf(ChangeLogSet.class))) {
                 for (ChangeLogSet<ChangeLogSet.Entry> set : sets) {
                     for (ChangeLogSet.Entry entry : set) {
                         authors.add(entry.getAuthor());
                         filesCounter += getAffectedFiles(entry).size();
+                        changes.add(entry.getMsg() + " [" + entry.getAuthor().getDisplayName() + "]");
                     }
                 }
             }
             factsBuilder.addDevelopers(authors);
             factsBuilder.addNumberOfFilesChanged(filesCounter);
+            factsBuilder.addChangeDetails(getFormatedChangesString(changes));
         }
+    }
+
+    private String getFormatedChangesString(ArrayList<String> changes) {
+        if (changes != null && changes.size() > 0) {
+            StringBuilder sb = new StringBuilder(1024);
+            sb.append("<ul>");
+            for (String change : changes) {
+                sb.append("<li>");
+                sb.append(change);
+                sb.append("</li>");
+            }
+            sb.append("</ul>");
+        }
+
+        return "No changes";
     }
 
     private Collection<? extends ChangeLogSet.AffectedFile> getAffectedFiles(ChangeLogSet.Entry entry) {

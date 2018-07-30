@@ -24,7 +24,11 @@
                 {
                     "name": "Number of files changed",
                     "value": "2"
-                }
+                },
+              {
+                "name": "Change details",
+                "value": "No changes"
+              }
             ],
             "activityTitle": "Update from myFirstJob.",
             "activitySubtitle": "Latest status of build #167"
