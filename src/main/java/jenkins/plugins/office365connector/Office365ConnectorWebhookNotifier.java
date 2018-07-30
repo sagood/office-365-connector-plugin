@@ -309,6 +309,7 @@ public final class Office365ConnectorWebhookNotifier {
                 sb.append("</li>");
             }
             sb.append("</ul>");
+            return sb.toString();
         }
 
         return "No changes";

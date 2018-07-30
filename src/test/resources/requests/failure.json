@@ -31,7 +31,7 @@
                 },
               {
                 "name": "Change details",
-                "value": "No changes"
+                "value": "\u003cul\u003e\u003cli\u003enull [null]\u003c/li\u003e\u003c/ul\u003e"
               }
             ],
             "activityTitle": "Update from myFirstJob.",
