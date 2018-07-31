@@ -45,6 +45,7 @@ public class Webhook extends AbstractDescribableImpl<Webhook> {
     private boolean notifyFailure;
     private boolean notifyBackToNormal;
     private boolean notifyRepeatedFailure;
+    private String customMessage;
 
     private int timeout;
 
@@ -147,6 +148,13 @@ public class Webhook extends AbstractDescribableImpl<Webhook> {
     @DataBoundSetter
     public void setTimeout(int timeout) {
         this.timeout = timeout;
+    }
+
+    public String getCustomMessage() { return this.customMessage; }
+
+    @DataBoundSetter
+    public void setCustomMessage(String message) {
+        this.customMessage = message;
     }
 
     public List<Macro> getMacros() {

@@ -95,6 +95,7 @@ public final class Office365ConnectorWebhookNotifier {
 
         for (Webhook webhook : property.getWebhooks()) {
             if (decisionMaker.isStatusMatched(webhook) && decisionMaker.isAtLeastOneRuleMatched(webhook)) {
+                factsBuilder.addCustomMessage(webhook.getCustomMessage());
                 executeWorker(webhook, card);
             }
         }
@@ -296,6 +297,9 @@ public final class Office365ConnectorWebhookNotifier {
             factsBuilder.addDevelopers(authors);
             factsBuilder.addNumberOfFilesChanged(filesCounter);
             factsBuilder.addChangeDetails(getFormatedChangesString(changes));
+        }
+        else {
+            factsBuilder.addChangeDetails(getFormatedChangesString(null));
         }
     }
 

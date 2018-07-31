@@ -40,6 +40,7 @@ public class FactsBuilder {
     final static String NAME_DEVELOPERS = "Developers";
     final static String NAME_NUMBER_OF_CHANGED_FILES = "Number of files changed";
     final static String NAME_CHANGE_DETAILS = "Change details";
+    final static String NAME_CUSTOM_MESSAGE = "Custom message";
 
     final static String NAME_START_TIME = "Start time";
     final static String NAME_COMPLETION_TIME = "Completion time";
@@ -148,6 +149,12 @@ public class FactsBuilder {
     public void addChangeDetails(String details) {
         if (details != null && !details.isEmpty()) {
             addFact(NAME_CHANGE_DETAILS, details);
+        }
+    }
+
+    public void addCustomMessage(String message) {
+        if (message != null && !message.isEmpty()) {
+            addFact(NAME_CUSTOM_MESSAGE, message);
         }
     }
 
