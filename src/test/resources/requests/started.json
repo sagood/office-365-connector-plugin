@@ -25,10 +25,10 @@
                     "name": "Number of files changed",
                     "value": "2"
                 },
-              {
-                "name": "Change details",
-                "value": "\u003cul\u003e\u003cli\u003enull [null]\u003c/li\u003e\u003c/ul\u003e"
-              }
+                {
+                    "name": "Change details",
+                    "value": "No changes"
+                }
             ],
             "activityTitle": "Update from myFirstJob.",
             "activitySubtitle": "Latest status of build #167"

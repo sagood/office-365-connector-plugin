@@ -290,7 +290,11 @@ public final class Office365ConnectorWebhookNotifier {
                     for (ChangeLogSet.Entry entry : set) {
                         authors.add(entry.getAuthor());
                         filesCounter += getAffectedFiles(entry).size();
-                        changes.add(entry.getMsg() + " [" + entry.getAuthor().getDisplayName() + "]");
+                        String changeMessage = entry.getMsg();
+                        if (changeMessage != null) {
+                            changeMessage = changeMessage.replaceAll("(\r\n|\n)", "<br />");
+                            changes.add(changeMessage + " [" + entry.getAuthor().getDisplayName() + "]");
+                        }
                     }
                 }
             }
